@@ -6,8 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Create an empty container to hold the image and text
     const imageContainer = document.getElementById('imageContainer');
-    const textContainer = document.getElementById('textContainer');
-    const inputContainer = document.getElementById('inputContainer');
+    const instructionContainer = document.getElementById('instructionContainer');
 
     // Listen for file input change event
     fileInput.addEventListener('change', handleImageUpload);
@@ -69,8 +68,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
 
                     imageContainer.innerHTML = '';
-                    textContainer.innerHTML = '';
-                    inputContainer.innerHTML = '';
+                    instructionContainer.innerHTML = '';
                     
                     if (posterized) {
                         console.log("Image is posterized with " + diffValues.length + " value steps");
@@ -80,7 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         const instrText = document.createElement('p');
                         instrText.textContent = "This Image is already posterized, next step is to choose desired colors.";
 
-                        textContainer.appendChild(instrText);
+                        instructionContainer.appendChild(instrText);
 
 
                     }
@@ -88,21 +86,34 @@ document.addEventListener('DOMContentLoaded', () => {
                         console.log("Image is not posterized");
                         // Create a new text element to instruct user
                         const instrText = document.createElement('p');
-                        instrText.textContent = "This Image is not posterized. Please select the number of value steps, and the lightest and darkest values you want.";
-                        textContainer.innerHTML = ''; // Clear previous image if any
-                        textContainer.appendChild(instrText);
+                        instrText.textContent = "This Image is not posterized. Please select the number of value steps, the darkest value, and the lighest value. (A value of 0 is the darkest, and a value of 255 is the lightest).";
+                        
 
                         const stepsInput = document.createElement('input');
                         stepsInput.type = "number";
                         stepsInput.id = "valueSteps";
                         stepsInput.defaultValue = 5;
 
+                        const minValueInput = document.createElement('input');
+                        minValueInput.type = "number";
+                        minValueInput.id = "minValue";
+                        minValueInput.defaultValue = 0;
+
+                        const maxValueInput = document.createElement('input');
+                        maxValueInput.type = "number";
+                        maxValueInput.id = "maxValue";
+                        maxValueInput.defaultValue = 255;
+
                         const confirmButton = document.createElement('button');
                         confirmButton.onclick = posterizeImage;
                         confirmButton.textContent = "Confirm Value Steps";
 
-                        inputContainer.appendChild(stepsInput);
-                        inputContainer.appendChild(confirmButton);
+
+                        instructionContainer.appendChild(instrText);
+                        instructionContainer.appendChild(stepsInput);
+                        instructionContainer.appendChild(minValueInput);
+                        instructionContainer.appendChild(maxValueInput);
+                        instructionContainer.appendChild(confirmButton);
                         
                     }
                     
@@ -151,7 +162,7 @@ function image1d2d(img1d, cols) {
 }
 
 function posterizeImage() {
-    var numSteps = document.getElementById("valueSteps").value;
+    var numSteps = parseInt(document.getElementById("valueSteps").value);
     console.log("Posterizing Image with " + numSteps + " steps.");
 
     // Create a canvas to modify the image
@@ -183,16 +194,19 @@ function posterizeImage() {
     }
 
     // Posterize it
+    var minValue = parseInt(document.getElementById("minValue").value);
+    var maxValue = parseInt(document.getElementById("maxValue").value);
     var ranges = [];
-    stepSize = 256 / numSteps;
+    stepSize = 255 / numSteps;
     for (let i = 0; i < numSteps; i++) {
         ranges.push([i * stepSize, (i + 1) * stepSize - 1]);
     }
     var values = []
-    stepSizeAlt = 256 / (numSteps - 1);
+    stepSizeAlt = (maxValue-minValue) / (numSteps - 1);
     for (let i = 0; i < numSteps; i++) {
-        values.push(i * stepSizeAlt);
+        values.push(i * stepSizeAlt + minValue);
     }
+    console.log(values);
     for (let i = 0; i < rows; i++) {
         for (let j = 0; j < cols; j++) {
             for (let k = 0; k < 3; k++) {
@@ -228,5 +242,8 @@ function posterizeImage() {
     // Optionally, add the image to the page (append it to the container)
     imageContainer.innerHTML = '';
     imageContainer.appendChild(newImage);
+
+    // now prompt user about colors
+    
 }
 
