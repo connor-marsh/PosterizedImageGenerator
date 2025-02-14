@@ -95,7 +95,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     else {
                         console.log("Image is not posterized");
-                        console.log(dt);
                         // Create a new text element to instruct user
                         const instrText = document.createElement('p');
                         instrText.textContent = "This Image is not posterized. Please select the number of value steps, the darkest value, and the lighest value. (A value of 0 is the darkest, and a value of 255 is the lightest).";
@@ -221,7 +220,7 @@ function posterizeImage() {
     for (let i = 0; i < numSteps; i++) {
         values.push(i * stepSizeAlt + minValue);
     }
-    console.log(values);
+    console.log("The 5 steps: " + values);
     for (let i = 0; i < rows; i++) {
         for (let j = 0; j < cols; j++) {
             for (let k = 0; k < 3; k++) {
@@ -315,7 +314,10 @@ function colorSelection() {
     instructionContainer.innerHTML = '';
 
     const colorPickInstructions = document.createElement('p');
-    colorPickInstructions.textContent = "Below is a color field of every hue and saturation (intensity), you may click on up to 10 desired colors. Click the reset button to restart, and the confirm button to finish. (Note that it will generate an image for every possible combination of 2 colors you selected. For the math nerds, thats n Choose 2 images for n colors).";
+    colorPickInstructions.textContent = "Below is a color field of every hue and saturation (intensity), you may click on up to 10 desired colors. Click the reset button to restart, and the confirm button to finish.";
+
+    const colorPickInstructions2 = document.createElement('p');
+    colorPickInstructions2.textContent = "(Note that it will generate an image for every possible combination of 2 colors you selected. For the math nerds, thats n Choose 2 images for n colors).";
 
     const restartColorsButton = document.createElement('button');
     restartColorsButton.textContent = "Restart";
@@ -339,6 +341,7 @@ function colorSelection() {
         }
     };
     instructionContainer.appendChild(colorPickInstructions);
+    instructionContainer.appendChild(colorPickInstructions2);
     instructionContainer.appendChild(canvas);
     instructionContainer.appendChild(restartColorsButton);
     instructionContainer.appendChild(confirmColorsButton);

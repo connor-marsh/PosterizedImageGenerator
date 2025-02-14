@@ -11,17 +11,19 @@
 <body>
 
     <!-- Content goes here -->
-    <p>Upload an image! If the image is already Black and White Posterized, that'll be detected automatically.
-        Also you can click on "Upload File" at any point to restart the process, but might be buggy.
-        If you run into any issues/bugs, feel free to just refresh the page and try again.
-        The main work flow should be fine, but if you go back and forth between steps you might uncover a bug.
-        IMPORTANT NOTE: If the image you upload is high resolution (like >1k by 1k pixels) the generation might take some time, just be patient.
+    <p>Upload an image! If the image is already Black and White Posterized, that should be detected automatically. If not, please just upload the original version of your color photo instead.
+        <br>You can click on "Upload File" at any point to restart the process.
+        <br>If you run into any issues/bugs, feel free to just refresh the page and try again.
+        <br>IMPORTANT NOTE: If the image you upload is high resolution (like >1k by 1k pixels) the generation might take some time, just be patient.
     </p>
+    <div><br><br><br></div>
     <input type="file" id="imageInput" accept="image/*">
     <div id="instructionContainer"></div>
     <div id="confirmContainer"></div>
     <div id="imageContainer"></div>
-    <p>Interesting Note: There is some weirdness going on with the physics of color averaging which might account for some of the images looking funky. I tried to compensate my code for it in some areas but I don't know if I covered everything. Here is a great youtube video explaining this phenomenon</p>
+    <div><br><br></div>
+    <p>Interesting Note: There is some weirdness going on with the physics of color averaging which might account for some of the images looking funky.
+        <br>I tried to compensate my code for it in some areas but I don't know if I covered everything. Here is a great youtube video explaining this phenomenon</p>
     <a href="https://www.youtube.com/watch?v=LKnqECcg6Gw">Color Averaging Youtube Video</a>
     <!-- Link to the external script.js -->
     <script src="script.js"></script>
