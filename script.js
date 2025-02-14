@@ -73,7 +73,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                     if (posterized) {
                         console.log("Image is posterized with " + diffValues.length + " value steps");
-                        console.log(diffValues);
 
                         // Create a new text element to instruct user
                         const instrText = document.createElement('p');
@@ -96,6 +95,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     else {
                         console.log("Image is not posterized");
+                        console.log(dt);
                         // Create a new text element to instruct user
                         const instrText = document.createElement('p');
                         instrText.textContent = "This Image is not posterized. Please select the number of value steps, the darkest value, and the lighest value. (A value of 0 is the darkest, and a value of 255 is the lightest).";
@@ -276,6 +276,7 @@ function posterizeImage() {
 }
 
 function colorSelection() {
+    selectedColors.length = 0; // reset this array
     console.log("Starting color selection");
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
@@ -307,11 +308,14 @@ function colorSelection() {
 
     });
 
+    const confirmContainer = document.getElementById("confirmContainer");
+    confirmContainer.innerHTML = '';
+
     const instructionContainer = document.getElementById("instructionContainer");
     instructionContainer.innerHTML = '';
 
     const colorPickInstructions = document.createElement('p');
-    colorPickInstructions.textContent = "Below is a color field of every hue and saturation (intensity), you may click on up to 10 desired colors. Click the reset button to restart, and the confirm button to finish.";
+    colorPickInstructions.textContent = "Below is a color field of every hue and saturation (intensity), you may click on up to 10 desired colors. Click the reset button to restart, and the confirm button to finish. (Note that it will generate an image for every possible combination of 2 colors you selected. For the math nerds, thats n Choose 2 images for n colors).";
 
     const restartColorsButton = document.createElement('button');
     restartColorsButton.textContent = "Restart";
